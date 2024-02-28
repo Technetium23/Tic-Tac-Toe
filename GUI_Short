@@ -1,0 +1,1621 @@
+import pygame, sys
+from pygame.locals import *
+import time
+import random
+from random import randint, choice
+pygame.init()
+
+screen = pygame.display.set_mode((750, 450))
+screen.fill((255,215,0))
+pygame.display.set_caption("Tic-Tac-Toe")
+winner = False
+first_list = []
+user_positions = []
+computer_options = []
+empty_positions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+width_line = 2
+run = True
+
+#Functions
+def text_on_screen(text, coordinates, colour):
+    global winner
+    pygame.font.init()
+    font = pygame.font.SysFont('Comic Sans MS', 32)
+    textsurface = font.render(text, False, colour)
+    screen.blit(textsurface, coordinates)
+    winner = True
+while run:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+
+    vertical_line1 = pygame.draw.line(screen, (0, 0, 0), (325, 125), (325, 275), width_line)
+    vertical_line2 = pygame.draw.line(screen, (0, 0, 0), (375, 125), (375, 275), width_line)
+
+    horizontal_line1 = pygame.draw.line(screen, (0, 0, 0), (275, 175), (425, 175), width_line)
+    horizontal_line2 = pygame.draw.line(screen, (0, 0, 0), (275, 225), (425, 225), width_line)
+    
+# Button Functioning
+    buttons = pygame.key.get_pressed()
+    if buttons[pygame.K_SPACE]:
+            first_list = []
+            user_positions = []
+            computer_options = []
+            empty_positions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+            screen.fill((255,215,0))
+            vertical_line1 = pygame.draw.line(screen, (0, 0, 0), (325, 125), (325, 275), width_line)
+            vertical_line2 = pygame.draw.line(screen, (0, 0, 0), (375, 125), (375, 275), width_line)
+            winner = False
+            # vertical_line3 = pygame.draw.line(screen, (255, 0, 0), (425, 300), (425, 150), width_line)
+
+            horizontal_line1 = pygame.draw.line(screen, (0, 0, 0), (275, 175), (425, 175), width_line)
+            horizontal_line2 = pygame.draw.line(screen, (0, 0, 0), (275, 225), (425, 225), width_line)
+            # horizontal_line3 = pygame.draw.line(screen, (255, 255, 255), (350, 225), (350, 225), width_line)
+    if buttons[pygame.K_TAB]:
+        break
+    # if starting == 1:
+    if len(empty_positions) > 1 and winner != True:
+        buttons = pygame.key.get_pressed()
+        if 1 in empty_positions:
+            if buttons[pygame.K_1]:
+                pygame.draw.line(screen, (0, 0, 0), (285, 135), (315, 165), 2)
+                pygame.draw.line(screen, (0, 0, 0), (315, 135), (285, 165), 2)
+                first_list.append(1)
+                for num in first_list:
+                    if num not in user_positions and num in empty_positions:
+                        first_list = []
+                        user_positions.append(num)
+                        empty_positions.remove(num)
+                        if winner != True:
+                            # Computer Wins
+                            # Vertical Position 2
+                            if 2 in computer_options and 5 in computer_options and 8 in empty_positions:
+                                computer_options.append(8)
+                                empty_positions.remove(8)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 250), 19, 2)
+                            elif 8 in computer_options and 5 in computer_options and 2 in empty_positions:
+                                computer_options.append(2)
+                                empty_positions.remove(2)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 150), 19, 2)
+                            elif 2 in computer_options and 8 in computer_options and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+
+                            # Vertical Position 3
+                            elif 3 in computer_options and 6 in computer_options and 9 in empty_positions:
+                                computer_options.append(9)
+                                empty_positions.remove(9)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+                            elif 9 in computer_options and 6 in computer_options and 3 in empty_positions:
+                                computer_options.append(3)
+                                empty_positions.remove(3)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                            elif 3 in computer_options and 9 in computer_options and 6 in empty_positions:
+                                computer_options.append(6)
+                                empty_positions.remove(6)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 200), 19, 2)                                            
+
+                            # Horizontal position 2
+                            elif 4 in computer_options and 5 in computer_options and 6 in empty_positions:
+                                computer_options.append(6)
+                                empty_positions.remove(6)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 200), 19, 2)
+                            elif 6 in computer_options and 5 in computer_options and 4 in empty_positions:
+                                computer_options.append(4)
+                                empty_positions.remove(4)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 200), 19, 2)
+                            elif 4 in computer_options and 6 in computer_options and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+                            
+                            # Horizontal Position 3
+                            elif 7 in computer_options and 8 in computer_options and 9 in empty_positions:
+                                computer_options.append(9)
+                                empty_positions.remove(9)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+                            elif 9 in computer_options and 8 in computer_options and 7 in empty_positions:
+                                computer_options.append(7)
+                                empty_positions.remove(7)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)
+                            elif 7 in computer_options and 9 in computer_options and 8 in empty_positions:
+                                computer_options.append(8)
+                                empty_positions.remove(8)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 250), 19, 2)                        
+
+                            # Diagonal Position 3 to 7
+                            elif 3 in computer_options and 5 in computer_options and 7 in empty_positions:
+                                computer_options.append(7)
+                                empty_positions.remove(7)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)
+                            elif 7 in computer_options and 5 in computer_options and 3 in empty_positions:
+                                computer_options.append(3)
+                                empty_positions.remove(3)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                            elif 3 in computer_options and 7 in computer_options and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+
+                            # Special Cases
+                            elif 5 in user_positions and 9 in computer_options and 3 in empty_positions:
+                                computer_options.append(3)
+                                empty_positions.remove(3)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                            elif 5 in user_positions and 9 in computer_options and 7 in empty_positions:
+                                computer_options.append(7)
+                                empty_positions.remove(7)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)
+
+                            # Other Cases
+                            elif 2 in user_positions and 2 not in empty_positions and 2 not in computer_options and 3 in empty_positions:
+                                computer_options.append(3)
+                                empty_positions.remove(3)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)                                            
+                            elif 4 in user_positions and 4 not in empty_positions and 4 not in computer_options and 7 in empty_positions:
+                                computer_options.append(7)
+                                empty_positions.remove(7)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)                                                
+                            elif 5 in user_positions and 5 not in empty_positions and 5 not in computer_options and 9 in empty_positions:
+                                computer_options.append(9)
+                                empty_positions.remove(9)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+                            elif 3 in user_positions and 3 not in empty_positions and 3 not in computer_options and 2 in empty_positions:
+                                computer_options.append(2)
+                                empty_positions.remove(2)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 150), 19, 2)                                            
+                            elif 7 in user_positions and 7 not in empty_positions and 7 not in computer_options and 4 in empty_positions:
+                                computer_options.append(4)
+                                empty_positions.remove(4)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 200), 19, 2)                                                
+                            elif 9 in user_positions and 9 not in empty_positions and 9 not in computer_options and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+                            
+                            # Corner Cases
+                            elif len(empty_positions) == 8:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+                            elif len(empty_positions) == 6 and 9 in user_positions and 5 in computer_options:
+                                computer_options.append(2)
+                                empty_positions.remove(2)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 150), 19, 2)
+                            else:
+                                a = choice(empty_positions)
+                                if a == 2 and a in empty_positions:
+                                    computer_options.append(2)
+                                    empty_positions.remove(2)
+                                    pygame.draw.circle(screen, (255, 255, 255), (350, 150), 19, 2)
+                                elif a == 3 and a in empty_positions:
+                                    computer_options.append(3)
+                                    empty_positions.remove(3)
+                                    pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                                elif a == 4 and a in empty_positions:
+                                    computer_options.append(4)
+                                    empty_positions.remove(4)
+                                    pygame.draw.circle(screen, (255, 255, 255), (300, 200), 19, 2)
+                                elif a == 5 and a in empty_positions:
+                                    computer_options.append(5)
+                                    empty_positions.remove(5)
+                                    pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+                                elif a == 6 and a in empty_positions:                        
+                                    computer_options.append(6)
+                                    empty_positions.remove(6)
+                                    pygame.draw.circle(screen, (255, 255, 255), (400, 200), 19, 2)                        
+                                elif a == 7 and a in empty_positions:
+                                    computer_options.append(7)
+                                    empty_positions.remove(7)
+                                    pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)                        
+                                elif a == 8 and a in empty_positions:
+                                    computer_options.append(8)
+                                    empty_positions.remove(8)
+                                    pygame.draw.circle(screen, (255, 255, 255), (350, 250), 19, 2)
+                                elif a == 9 and a in empty_positions:                        
+                                    computer_options.append(9)
+                                    empty_positions.remove(9)
+                                    pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)   
+        else:
+            pass
+        if 2 in empty_positions:              
+            if buttons[pygame.K_2]:
+                pygame.draw.line(screen, (0, 0, 0), (335, 135), (365, 165), 2)
+                pygame.draw.line(screen, (0, 0, 0), (365, 135), (335, 165), 2)
+                first_list.append(2)
+                for num in first_list:
+                    if num not in user_positions and num in empty_positions:
+                        first_list = []
+                        user_positions.append(num)
+                        empty_positions.remove(num)
+                        if winner != True:
+                            # Computer wins
+                            # Vertical Position 1
+                            if 1 in computer_options and 4 in computer_options and 7 in empty_positions:
+                                computer_options.append(7)
+                                empty_positions.remove(7)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)
+                            elif 7 in computer_options and 4 in computer_options and 1 in empty_positions:
+                                computer_options.append(1)
+                                empty_positions.remove(1)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                            elif 1 in computer_options and 7 in computer_options and 4 in empty_positions:
+                                computer_options.append(4)
+                                empty_positions.remove(4)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 200), 19, 2)
+
+                            # Vertical Position 3
+                            elif 3 in computer_options and 6 in computer_options and 9 in empty_positions:
+                                computer_options.append(9)
+                                empty_positions.remove(9)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+                            elif 9 in computer_options and 6 in computer_options and 3 in empty_positions:
+                                computer_options.append(3)
+                                empty_positions.remove(3)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                            elif 3 in computer_options and 9 in computer_options and 6 in empty_positions:
+                                computer_options.append(6)
+                                empty_positions.remove(6)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 200), 19, 2)                    
+
+                            # Horizontal position 2
+                            elif 4 in computer_options and 5 in computer_options and 6 in empty_positions:
+                                computer_options.append(6)
+                                empty_positions.remove(6)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 200), 19, 2)
+                            elif 6 in computer_options and 5 in computer_options and 4 in empty_positions:
+                                computer_options.append(4)
+                                empty_positions.remove(4)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 200), 19, 2)
+                            elif 4 in computer_options and 6 in computer_options and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+                            
+                            # Horizontal Position 3
+                            elif 7 in computer_options and 8 in computer_options and 9 in empty_positions:
+                                computer_options.append(9)
+                                empty_positions.remove(9)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+                            elif 9 in computer_options and 8 in computer_options and 7 in empty_positions:
+                                computer_options.append(7)
+                                empty_positions.remove(7)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)
+                            elif 7 in computer_options and 9 in computer_options and 8 in empty_positions:
+                                computer_options.append(8)
+                                empty_positions.remove(8)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 250), 19, 2)
+
+                            # Diagonal Position 1 to 9
+                            elif 1 in computer_options and 5 in computer_options and 9 in empty_positions:
+                                computer_options.append(9)
+                                empty_positions.remove(9)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+                            elif 9 in computer_options and 5 in computer_options and 1 in empty_positions:
+                                computer_options.append(1)
+                                empty_positions.remove(1)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                            elif 1 in computer_options and 9 in computer_options and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+
+                            # Diagonal Position 3 to 7
+                            elif 3 in computer_options and 5 in computer_options and 7 in empty_positions:
+                                computer_options.append(7)
+                                empty_positions.remove(7)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)
+                            elif 7 in computer_options and 5 in computer_options and 3 in empty_positions:
+                                computer_options.append(3)
+                                empty_positions.remove(3)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                            elif 3 in computer_options and 7 in computer_options and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+
+                            # Other Cases
+                            elif 1 in user_positions and 3 in empty_positions:
+                                computer_options.append(3)
+                                empty_positions.remove(3)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)                                            
+                            elif 3 in user_positions and 1 in empty_positions:
+                                computer_options.append(1)
+                                empty_positions.remove(1)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                            elif 5 in user_positions and 8 in empty_positions:
+                                computer_options.append(8)
+                                empty_positions.remove(8)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 250), 19, 2)
+                            elif 8 in user_positions and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+                            else:
+                                a = choice(empty_positions)
+                                if a == 1 and a in empty_positions:
+                                    computer_options.append(1)
+                                    empty_positions.remove(1)
+                                    pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                                elif a == 2 and a in empty_positions:
+                                    computer_options.append(2)
+                                    empty_positions.remove(2)
+                                    pygame.draw.circle(screen, (255, 255, 255), (350, 150), 19, 2)
+                                elif a == 3 and a in empty_positions:
+                                    computer_options.append(3)
+                                    empty_positions.remove(3)
+                                    pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                                elif a == 4 and a in empty_positions:
+                                    computer_options.append(4)
+                                    empty_positions.remove(4)
+                                    pygame.draw.circle(screen, (255, 255, 255), (300, 200), 19, 2)
+                                elif a == 5 and a in empty_positions:
+                                    computer_options.append(5)
+                                    empty_positions.remove(5)
+                                    pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+                                elif a == 6 and a in empty_positions:                        
+                                    computer_options.append(6)
+                                    empty_positions.remove(6)
+                                    pygame.draw.circle(screen, (255, 255, 255), (400, 200), 19, 2)                        
+                                elif a == 7 and a in empty_positions:
+                                    computer_options.append(7)
+                                    empty_positions.remove(7)
+                                    pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)                        
+                                elif a == 8 and a in empty_positions:
+                                    computer_options.append(8)
+                                    empty_positions.remove(8)
+                                    pygame.draw.circle(screen, (255, 255, 255), (350, 250), 19, 2)
+                                elif a == 9 and a in empty_positions:                        
+                                    computer_options.append(9)
+                                    empty_positions.remove(9)
+                                    pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+        else:
+            pass
+        if 3 in empty_positions:
+            if buttons[pygame.K_3]:
+                pygame.draw.line(screen, (0, 0, 0), (385, 135), (415, 165), 2)
+                pygame.draw.line(screen, (0, 0, 0), (415, 135), (385, 165), 2)
+                first_list.append(3)
+                for num in first_list:
+                    if num not in user_positions and num in empty_positions:
+                        first_list = []
+                        user_positions.append(num)
+                        empty_positions.remove(num)
+                        if winner != True:
+                            #Computer Wins
+                            # Vertical Position 1
+                            if 1 in computer_options and 4 in computer_options and 7 in empty_positions:
+                                computer_options.append(7)
+                                empty_positions.remove(7)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)
+                            elif 7 in computer_options and 4 in computer_options and 1 in empty_positions:
+                                computer_options.append(1)
+                                empty_positions.remove(1)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                            elif 1 in computer_options and 7 in computer_options and 4 in empty_positions:
+                                computer_options.append(4)
+                                empty_positions.remove(4)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 200), 19, 2)
+
+                            # Vertical Position 2
+                            if 2 in computer_options and 5 in computer_options and 8 in empty_positions:
+                                computer_options.append(8)
+                                empty_positions.remove(8)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 250), 19, 2)
+                            elif 8 in computer_options and 5 in computer_options and 2 in empty_positions:
+                                computer_options.append(2)
+                                empty_positions.remove(2)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 150), 19, 2)
+                            elif 2 in computer_options and 8 in computer_options and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+
+                            # Horizontal position 2
+                            elif 4 in computer_options and 5 in computer_options and 6 in empty_positions:
+                                computer_options.append(6)
+                                empty_positions.remove(6)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 200), 19, 2)
+                            elif 6 in computer_options and 5 in computer_options and 4 in empty_positions:
+                                computer_options.append(4)
+                                empty_positions.remove(4)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 200), 19, 2)
+                            elif 4 in computer_options and 6 in computer_options and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+                            
+                            # Horizontal Position 3
+                            elif 7 in computer_options and 8 in computer_options and 9 in empty_positions:
+                                computer_options.append(9)
+                                empty_positions.remove(9)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+                            elif 9 in computer_options and 8 in computer_options and 7 in empty_positions:
+                                computer_options.append(7)
+                                empty_positions.remove(7)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)
+                            elif 7 in computer_options and 9 in computer_options and 8 in empty_positions:
+                                computer_options.append(8)
+                                empty_positions.remove(8)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 250), 19, 2)
+
+                            # Diagonal Position 1 to 9
+                            elif 1 in computer_options and 5 in computer_options and 9 in empty_positions:
+                                computer_options.append(9)
+                                empty_positions.remove(9)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+                            elif 9 in computer_options and 5 in computer_options and 1 in empty_positions:
+                                computer_options.append(1)
+                                empty_positions.remove(1)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                            elif 1 in computer_options and 9 in computer_options and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+
+                            # Special Cases
+                            elif 5 in user_positions and 7 in computer_options and 1 in empty_positions:
+                                computer_options.append(1)
+                                empty_positions.remove(1)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                            elif 5 in user_positions and 7 in computer_options and 9 in empty_positions:
+                                computer_options.append(9)
+                                empty_positions.remove(9)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+
+                            #Other Cases
+                            elif 2 in user_positions and 1 in empty_positions:
+                                computer_options.append(1)
+                                empty_positions.remove(1)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)                                            
+                            elif 5 in user_positions and 7 in empty_positions:
+                                computer_options.append(7)
+                                empty_positions.remove(7)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)                                                
+                            elif 6 in user_positions and 9 in empty_positions:
+                                computer_options.append(9)
+                                empty_positions.remove(9)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+
+                            elif 1 in user_positions and 2 in empty_positions:
+                                computer_options.append(2)
+                                empty_positions.remove(2)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 150), 19, 2)
+                            elif 7 in user_positions and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+                            elif 9 in user_positions and 6 in empty_positions:
+                                computer_options.append(6)
+                                empty_positions.remove(6)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 200), 19, 2)
+
+                            # Corner Cases
+                            elif len(empty_positions) == 8:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+                            elif len(empty_positions) == 6 and 7 in user_positions and 5 in computer_options:
+                                computer_options.append(6)
+                                empty_positions.remove(6)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 200), 19, 2)
+                            else:
+                                a = choice(empty_positions)
+                                if a == 1 and a in empty_positions:
+                                    computer_options.append(1)
+                                    empty_positions.remove(1)
+                                    pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                                elif a == 2 and a in empty_positions:
+                                    computer_options.append(2)
+                                    empty_positions.remove(2)
+                                    pygame.draw.circle(screen, (255, 255, 255), (350, 150), 19, 2)
+                                elif a == 3 and a in empty_positions:
+                                    computer_options.append(3)
+                                    empty_positions.remove(3)
+                                    pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                                elif a == 4 and a in empty_positions:
+                                    computer_options.append(4)
+                                    empty_positions.remove(4)
+                                    pygame.draw.circle(screen, (255, 255, 255), (300, 200), 19, 2)
+                                elif a == 5 and a in empty_positions:
+                                    computer_options.append(5)
+                                    empty_positions.remove(5)
+                                    pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+                                elif a == 6 and a in empty_positions:                        
+                                    computer_options.append(6)
+                                    empty_positions.remove(6)
+                                    pygame.draw.circle(screen, (255, 255, 255), (400, 200), 19, 2)                        
+                                elif a == 7 and a in empty_positions:
+                                    computer_options.append(7)
+                                    empty_positions.remove(7)
+                                    pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)                        
+                                elif a == 8 and a in empty_positions:
+                                    computer_options.append(8)
+                                    empty_positions.remove(8)
+                                    pygame.draw.circle(screen, (255, 255, 255), (350, 250), 19, 2)
+                                elif a == 9 and a in empty_positions:                        
+                                    computer_options.append(9)
+                                    empty_positions.remove(9)
+                                    pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+        else:
+            pass
+        if 4 in empty_positions:
+            if buttons[pygame.K_4]:
+                pygame.draw.line(screen, (0, 0, 0), (315, 185), (285, 215), 2)
+                pygame.draw.line(screen, (0, 0, 0), (285, 185), (315, 215), 2)
+                first_list.append(4)
+                for num in first_list:
+                    if num not in user_positions and num in empty_positions:
+                        first_list = []
+                        user_positions.append(num)
+                        empty_positions.remove(num)
+                        if winner != True:
+                            # Computer Wins
+                            # Vertical Position 2
+                            if 2 in computer_options and 5 in computer_options and 8 in empty_positions:
+                                computer_options.append(8)
+                                empty_positions.remove(8)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 250), 19, 2)
+                            elif 8 in computer_options and 5 in computer_options and 2 in empty_positions:
+                                computer_options.append(2)
+                                empty_positions.remove(2)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 150), 19, 2)
+                            elif 2 in computer_options and 8 in computer_options and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+
+                            # Vertical Position 3
+                            elif 3 in computer_options and 6 in computer_options and 9 in empty_positions:
+                                computer_options.append(9)
+                                empty_positions.remove(9)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+                            elif 9 in computer_options and 6 in computer_options and 3 in empty_positions:
+                                computer_options.append(3)
+                                empty_positions.remove(3)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                            elif 3 in computer_options and 9 in computer_options and 6 in empty_positions:
+                                computer_options.append(6)
+                                empty_positions.remove(6)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 200), 19, 2)
+                            
+                            # Horizontal Position 1
+                            elif 1 in computer_options and 2 in computer_options and 3 in empty_positions:
+                                computer_options.append(3)
+                                empty_positions.remove(3)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                            elif 3 in computer_options and 2 in computer_options and 1 in empty_positions:
+                                computer_options.append(1)
+                                empty_positions.remove(1)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                            elif 1 in computer_options and 3 in computer_options and 2 in empty_positions:
+                                computer_options.append(2)
+                                empty_positions.remove(2)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 150), 19, 2)                
+                            
+                            # Horizontal Position 3
+                            elif 7 in computer_options and 8 in computer_options and 9 in empty_positions:
+                                computer_options.append(9)
+                                empty_positions.remove(9)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+                            elif 9 in computer_options and 8 in computer_options and 7 in empty_positions:
+                                computer_options.append(7)
+                                empty_positions.remove(7)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)
+                            elif 7 in computer_options and 9 in computer_options and 8 in empty_positions:
+                                computer_options.append(8)
+                                empty_positions.remove(8)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 250), 19, 2)
+
+                            # Diagonal Position 1 to 9
+                            elif 1 in computer_options and 5 in computer_options and 9 in empty_positions:
+                                computer_options.append(9)
+                                empty_positions.remove(9)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+                            elif 9 in computer_options and 5 in computer_options and 1 in empty_positions:
+                                computer_options.append(1)
+                                empty_positions.remove(1)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                            elif 1 in computer_options and 9 in computer_options and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+
+                            # Diagonal Position 3 to 7
+                            elif 3 in computer_options and 5 in computer_options and 7 in empty_positions:
+                                computer_options.append(7)
+                                empty_positions.remove(7)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)
+                            elif 7 in computer_options and 5 in computer_options and 3 in empty_positions:
+                                computer_options.append(3)
+                                empty_positions.remove(3)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                            elif 3 in computer_options and 7 in computer_options and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+
+                            # Other Cases
+                            elif 1 in user_positions and 7 in empty_positions:
+                                computer_options.append(7)
+                                empty_positions.remove(7)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)                                            
+                            elif 7 in user_positions and 1 in empty_positions:
+                                computer_options.append(1)
+                                empty_positions.remove(1)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                            elif 5 in user_positions and 6 in empty_positions:
+                                computer_options.append(6)
+                                empty_positions.remove(6)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 200), 19, 2)                        
+                            elif 6 in user_positions and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+                            else:                            
+                                a = choice(empty_positions)
+                                if a == 1 and a in empty_positions:
+                                    computer_options.append(1)
+                                    empty_positions.remove(1)
+                                    pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                                elif a == 2 and a in empty_positions:
+                                    computer_options.append(2)
+                                    empty_positions.remove(2)
+                                    pygame.draw.circle(screen, (255, 255, 255), (350, 150), 19, 2)
+                                elif a == 3 and a in empty_positions:
+                                    computer_options.append(3)
+                                    empty_positions.remove(3)
+                                    pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                                elif a == 4 and a in empty_positions:
+                                    computer_options.append(4)
+                                    empty_positions.remove(4)
+                                    pygame.draw.circle(screen, (255, 255, 255), (300, 200), 19, 2)
+                                elif a == 5 and a in empty_positions:
+                                    computer_options.append(5)
+                                    empty_positions.remove(5)
+                                    pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+                                elif a == 6 and a in empty_positions:                        
+                                    computer_options.append(6)
+                                    empty_positions.remove(6)
+                                    pygame.draw.circle(screen, (255, 255, 255), (400, 200), 19, 2)                        
+                                elif a == 7 and a in empty_positions:
+                                    computer_options.append(7)
+                                    empty_positions.remove(7)
+                                    pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)                        
+                                elif a == 8 and a in empty_positions:
+                                    computer_options.append(8)
+                                    empty_positions.remove(8)
+                                    pygame.draw.circle(screen, (255, 255, 255), (350, 250), 19, 2)
+                                elif a == 9 and a in empty_positions:                        
+                                    computer_options.append(9)
+                                    empty_positions.remove(9)
+                                    pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+        else:
+            pass
+        if 5 in empty_positions:
+            if buttons[pygame.K_5]:
+                pygame.draw.line(screen, (0, 0, 0), (335, 185), (365, 215), 2)
+                pygame.draw.line(screen, (0, 0, 0), (365, 185), (335, 215), 2)
+                first_list.append(5)
+                for num in first_list:
+                    if num not in user_positions and num in empty_positions:
+                        first_list = []
+                        user_positions.append(num)
+                        empty_positions.remove(num)
+                        if winner != True:
+                            # Computer Wins
+                            # Vertical Position 1
+                            if 1 in computer_options and 4 in computer_options and 7 in empty_positions:
+                                computer_options.append(7)
+                                empty_positions.remove(7)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)
+                            elif 7 in computer_options and 4 in computer_options and 1 in empty_positions:
+                                computer_options.append(1)
+                                empty_positions.remove(1)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                            elif 1 in computer_options and 7 in computer_options and 4 in empty_positions:
+                                computer_options.append(4)
+                                empty_positions.remove(4)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 200), 19, 2)                        
+
+                            # Vertical Position 3
+                            elif 3 in computer_options and 6 in computer_options and 9 in empty_positions:
+                                computer_options.append(9)
+                                empty_positions.remove(9)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+                            elif 9 in computer_options and 6 in computer_options and 3 in empty_positions:
+                                computer_options.append(3)
+                                empty_positions.remove(3)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                            elif 3 in computer_options and 9 in computer_options and 6 in empty_positions:
+                                computer_options.append(6)
+                                empty_positions.remove(6)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 200), 19, 2)
+                            
+                            # Horizontal Position 1
+                            elif 1 in computer_options and 2 in computer_options and 3 in empty_positions:
+                                computer_options.append(3)
+                                empty_positions.remove(3)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                            elif 3 in computer_options and 2 in computer_options and 1 in empty_positions:
+                                computer_options.append(1)
+                                empty_positions.remove(1)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                            elif 1 in computer_options and 3 in computer_options and 2 in empty_positions:
+                                computer_options.append(2)
+                                empty_positions.remove(2)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 150), 19, 2)                        
+                            
+                            # Horizontal Position 3
+                            elif 7 in computer_options and 8 in computer_options and 9 in empty_positions:
+                                computer_options.append(9)
+                                empty_positions.remove(9)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+                            elif 9 in computer_options and 8 in computer_options and 7 in empty_positions:
+                                computer_options.append(7)
+                                empty_positions.remove(7)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)
+                            elif 7 in computer_options and 9 in computer_options and 8 in empty_positions:
+                                computer_options.append(8)
+                                empty_positions.remove(8)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 250), 19, 2)                
+
+                        # Corner Cases
+                            elif len(empty_positions) == 8:
+                                corner_choice = [1, 3, 7, 9]
+                                corn_choice = choice(corner_choice)
+                                if corn_choice == 9:
+                                    computer_options.append(9)
+                                    empty_positions.remove(9)
+                                    pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+                                elif corn_choice == 3:
+                                    computer_options.append(3)
+                                    empty_positions.remove(3)
+                                    pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                                elif corn_choice == 7:
+                                    computer_options.append(7)
+                                    empty_positions.remove(7)
+                                    pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)
+                                elif corn_choice == 1:
+                                    computer_options.append(1)
+                                    empty_positions.remove(1)
+                                    pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+
+                    #   Diagonals                        
+                            elif 1 in user_positions and 9 in empty_positions:
+                                computer_options.append(9)
+                                empty_positions.remove(9)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+                            elif 9 in user_positions and 1 in empty_positions:
+                                computer_options.append(1)
+                                empty_positions.remove(1)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                            elif 3 in user_positions and 7 in empty_positions:
+                                computer_options.append(7)
+                                empty_positions.remove(7)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)
+                            elif 7 in user_positions and 3 in empty_positions:
+                                computer_options.append(3)
+                                empty_positions.remove(3)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                    #   Verticals
+                            elif 2 in user_positions and 8 in empty_positions:
+                                computer_options.append(8)
+                                empty_positions.remove(8)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 250), 19, 2)
+                            elif 8 in user_positions and 2 in empty_positions:
+                                computer_options.append(2)
+                                empty_positions.remove(2)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 150), 19, 2)
+                    #   Horizontals
+                            elif 4 in user_positions and 6 in empty_positions:
+                                computer_options.append(6)
+                                empty_positions.remove(6)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 200), 19, 2)
+                            elif 6 in user_positions and 4 in empty_positions:
+                                computer_options.append(4)
+                                empty_positions.remove(4)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 200), 19, 2)
+                            else:
+                                a = choice(empty_positions)
+                                if a == 1 and a in empty_positions:
+                                    computer_options.append(1)
+                                    empty_positions.remove(1)
+                                    pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                                elif a == 2 and a in empty_positions:
+                                    computer_options.append(2)
+                                    empty_positions.remove(2)
+                                    pygame.draw.circle(screen, (255, 255, 255), (350, 150), 19, 2)
+                                elif a == 3 and a in empty_positions:
+                                    computer_options.append(3)
+                                    empty_positions.remove(3)
+                                    pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                                elif a == 4 and a in empty_positions:
+                                    computer_options.append(4)
+                                    empty_positions.remove(4)
+                                    pygame.draw.circle(screen, (255, 255, 255), (300, 200), 19, 2)
+                                elif a == 5 and a in empty_positions:
+                                    computer_options.append(5)
+                                    empty_positions.remove(5)
+                                    pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+                                elif a == 6 and a in empty_positions:                        
+                                    computer_options.append(6)
+                                    empty_positions.remove(6)
+                                    pygame.draw.circle(screen, (255, 255, 255), (400, 200), 19, 2)                        
+                                elif a == 7 and a in empty_positions:
+                                    computer_options.append(7)
+                                    empty_positions.remove(7)
+                                    pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)                        
+                                elif a == 8 and a in empty_positions:
+                                    computer_options.append(8)
+                                    empty_positions.remove(8)
+                                    pygame.draw.circle(screen, (255, 255, 255), (350, 250), 19, 2)
+                                elif a == 9 and a in empty_positions:                        
+                                    computer_options.append(9)
+                                    empty_positions.remove(9)
+                                    pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+        else:
+            pass
+        if 6 in empty_positions:
+            if buttons[pygame.K_6]:
+                pygame.draw.line(screen, (0, 0, 0), (385, 185), (415, 215), 2)
+                pygame.draw.line(screen, (0, 0, 0), (415, 185), (385, 215), 2)
+                first_list.append(6)
+                for num in first_list:
+                    if num not in user_positions and num in empty_positions:
+                        first_list = []
+                        user_positions.append(num)
+                        empty_positions.remove(num)
+                        if winner != True:
+                            # Computer Wins
+                            # Vertical Position 1
+                            if 1 in computer_options and 4 in computer_options and 7 in empty_positions:
+                                computer_options.append(7)
+                                empty_positions.remove(7)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)
+                            elif 7 in computer_options and 4 in computer_options and 1 in empty_positions:
+                                computer_options.append(1)
+                                empty_positions.remove(1)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                            elif 1 in computer_options and 7 in computer_options and 4 in empty_positions:
+                                computer_options.append(4)
+                                empty_positions.remove(4)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 200), 19, 2)
+
+                            # Vertical Position 2
+                            elif 2 in computer_options and 5 in computer_options and 8 in empty_positions:
+                                computer_options.append(8)
+                                empty_positions.remove(8)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 250), 19, 2)
+                            elif 8 in computer_options and 5 in computer_options and 2 in empty_positions:
+                                computer_options.append(2)
+                                empty_positions.remove(2)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 150), 19, 2)
+                            elif 2 in computer_options and 8 in computer_options and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+                            
+                            # Horizontal Position 1
+                            elif 1 in computer_options and 2 in computer_options and 3 in empty_positions:
+                                computer_options.append(3)
+                                empty_positions.remove(3)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                            elif 3 in computer_options and 2 in computer_options and 1 in empty_positions:
+                                computer_options.append(1)
+                                empty_positions.remove(1)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                            elif 1 in computer_options and 3 in computer_options and 2 in empty_positions:
+                                computer_options.append(2)
+                                empty_positions.remove(2)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 150), 19, 2)
+                            
+                            # Horizontal Position 3
+                            elif 7 in computer_options and 8 in computer_options and 9 in empty_positions:
+                                computer_options.append(9)
+                                empty_positions.remove(9)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+                            elif 9 in computer_options and 8 in computer_options and 7 in empty_positions:
+                                computer_options.append(7)
+                                empty_positions.remove(7)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)
+                            elif 7 in computer_options and 9 in computer_options and 8 in empty_positions:
+                                computer_options.append(8)
+                                empty_positions.remove(8)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 250), 19, 2)
+
+                            # Diagonal Position 1 to 9
+                            elif 1 in computer_options and 5 in computer_options and 9 in empty_positions:
+                                computer_options.append(9)
+                                empty_positions.remove(9)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+                            elif 9 in computer_options and 5 in computer_options and 1 in empty_positions:
+                                computer_options.append(1)
+                                empty_positions.remove(1)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                            elif 1 in computer_options and 9 in computer_options and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+
+                            # Diagonal Position 3 to 7
+                            elif 3 in computer_options and 5 in computer_options and 7 in empty_positions:
+                                computer_options.append(7)
+                                empty_positions.remove(7)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)
+                            elif 7 in computer_options and 5 in computer_options and 3 in empty_positions:
+                                computer_options.append(3)
+                                empty_positions.remove(3)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                            elif 3 in computer_options and 7 in computer_options and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+
+                            # Other Cases
+                            elif 3 in user_positions and 9 in empty_positions:
+                                computer_options.append(9)
+                                empty_positions.remove(9)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+                            elif 9 in user_positions and 3 in empty_positions:
+                                computer_options.append(3)
+                                empty_positions.remove(3)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                            elif 5 in user_positions and 4 in empty_positions:
+                                computer_options.append(4)
+                                empty_positions.remove(4)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 200), 19, 2)
+                            elif 4 in user_positions and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+                            else:
+                                a = choice(empty_positions)
+                                if a == 1 and a in empty_positions:
+                                    computer_options.append(1)
+                                    empty_positions.remove(1)
+                                    pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                                elif a == 2 and a in empty_positions:
+                                    computer_options.append(2)
+                                    empty_positions.remove(2)
+                                    pygame.draw.circle(screen, (255, 255, 255), (350, 150), 19, 2)
+                                elif a == 3 and a in empty_positions:
+                                    computer_options.append(3)
+                                    empty_positions.remove(3)
+                                    pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                                elif a == 4 and a in empty_positions:
+                                    computer_options.append(4)
+                                    empty_positions.remove(4)
+                                    pygame.draw.circle(screen, (255, 255, 255), (300, 200), 19, 2)
+                                elif a == 5 and a in empty_positions:
+                                    computer_options.append(5)
+                                    empty_positions.remove(5)
+                                    pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+                                elif a == 6 and a in empty_positions:                        
+                                    computer_options.append(6)
+                                    empty_positions.remove(6)
+                                    pygame.draw.circle(screen, (255, 255, 255), (400, 200), 19, 2)                        
+                                elif a == 7 and a in empty_positions:
+                                    computer_options.append(7)
+                                    empty_positions.remove(7)
+                                    pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)                        
+                                elif a == 8 and a in empty_positions:
+                                    computer_options.append(8)
+                                    empty_positions.remove(8)
+                                    pygame.draw.circle(screen, (255, 255, 255), (350, 250), 19, 2)
+                                elif a == 9 and a in empty_positions:                        
+                                    computer_options.append(9)
+                                    empty_positions.remove(9)
+                                    pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+        else:
+            pass
+        if 7 in empty_positions:
+            if buttons[pygame.K_7]:
+                pygame.draw.line(screen, (0, 0, 0), (285, 235), (315, 265), 2)
+                pygame.draw.line(screen, (0, 0, 0), (315, 235), (285, 265), 2)
+                first_list.append(7)
+                for num in first_list:
+                    if num not in user_positions and num in empty_positions:
+                        first_list = []
+                        user_positions.append(num)
+                        empty_positions.remove(num)
+                        if winner != True:
+                            # Computer Wins
+                            # Vertical Position 2
+                            if 2 in computer_options and 5 in computer_options and 8 in empty_positions:
+                                computer_options.append(8)
+                                empty_positions.remove(8)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 250), 19, 2)
+                            elif 8 in computer_options and 5 in computer_options and 2 in empty_positions:
+                                computer_options.append(2)
+                                empty_positions.remove(2)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 150), 19, 2)
+                            elif 2 in computer_options and 8 in computer_options and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+
+                            # Vertical Position 3
+                            elif 3 in computer_options and 6 in computer_options and 9 in empty_positions:
+                                computer_options.append(9)
+                                empty_positions.remove(9)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+                            elif 9 in computer_options and 6 in computer_options and 3 in empty_positions:
+                                computer_options.append(3)
+                                empty_positions.remove(3)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                            elif 3 in computer_options and 9 in computer_options and 6 in empty_positions:
+                                computer_options.append(6)
+                                empty_positions.remove(6)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 200), 19, 2)
+                            
+                            # Horizontal Position 1
+                            elif 1 in computer_options and 2 in computer_options and 3 in empty_positions:
+                                computer_options.append(3)
+                                empty_positions.remove(3)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                            elif 3 in computer_options and 2 in computer_options and 1 in empty_positions:
+                                computer_options.append(1)
+                                empty_positions.remove(1)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                            elif 1 in computer_options and 3 in computer_options and 2 in empty_positions:
+                                computer_options.append(2)
+                                empty_positions.remove(2)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 150), 19, 2)
+
+                            # Horizontal position 2
+                            elif 4 in computer_options and 5 in computer_options and 6 in empty_positions:
+                                computer_options.append(6)
+                                empty_positions.remove(6)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 200), 19, 2)
+                            elif 6 in computer_options and 5 in computer_options and 4 in empty_positions:
+                                computer_options.append(4)
+                                empty_positions.remove(4)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 200), 19, 2)
+                            elif 4 in computer_options and 6 in computer_options and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)                    
+
+                            # Diagonal Position 1 to 9
+                            elif 1 in computer_options and 5 in computer_options and 9 in empty_positions:
+                                computer_options.append(9)
+                                empty_positions.remove(9)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+                            elif 9 in computer_options and 5 in computer_options and 1 in empty_positions:
+                                computer_options.append(1)
+                                empty_positions.remove(1)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                            elif 1 in computer_options and 9 in computer_options and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)                        
+                                
+                            # Special Cases
+                            elif 5 in user_positions and 3 in computer_options and 1 in empty_positions:
+                                computer_options.append(1)
+                                empty_positions.remove(1)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                            elif 5 in user_positions and 3 in computer_options and 9 in empty_positions:
+                                computer_options.append(9)
+                                empty_positions.remove(9)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+
+                            elif 8 in user_positions and 9 in empty_positions:
+                                computer_options.append(9)
+                                empty_positions.remove(9)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+                            elif 9 in user_positions and 8 in empty_positions:
+                                computer_options.append(8)
+                                empty_positions.remove(8)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 250), 19, 2)
+                            elif 4 in user_positions and 1 in empty_positions:
+                                computer_options.append(1)
+                                empty_positions.remove(1)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                            elif 1 in user_positions and 4 in empty_positions:
+                                computer_options.append(4)
+                                empty_positions.remove(4)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 200), 19, 2)
+                            elif 5 in user_positions and 3 in empty_positions:
+                                computer_options.append(3)
+                                empty_positions.remove(3)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                            elif 3 in user_positions and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+                            
+                            # Corner Cases
+                            elif len(empty_positions) == 8:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+                            elif len(empty_positions) == 6 and 3 in user_positions and 5 in computer_options:
+                                computer_options.append(4)
+                                empty_positions.remove(4)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 200), 19, 2)
+                            else:
+                                a = choice(empty_positions)
+                                if a == 1 and a in empty_positions:
+                                    computer_options.append(1)
+                                    empty_positions.remove(1)
+                                    pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                                elif a == 2 and a in empty_positions:
+                                    computer_options.append(2)
+                                    empty_positions.remove(2)
+                                    pygame.draw.circle(screen, (255, 255, 255), (350, 150), 19, 2)
+                                elif a == 3 and a in empty_positions:
+                                    computer_options.append(3)
+                                    empty_positions.remove(3)
+                                    pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                                elif a == 4 and a in empty_positions:
+                                    computer_options.append(4)
+                                    empty_positions.remove(4)
+                                    pygame.draw.circle(screen, (255, 255, 255), (300, 200), 19, 2)
+                                elif a == 5 and a in empty_positions:
+                                    computer_options.append(5)
+                                    empty_positions.remove(5)
+                                    pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+                                elif a == 6 and a in empty_positions:                        
+                                    computer_options.append(6)
+                                    empty_positions.remove(6)
+                                    pygame.draw.circle(screen, (255, 255, 255), (400, 200), 19, 2)                        
+                                elif a == 7 and a in empty_positions:
+                                    computer_options.append(7)
+                                    empty_positions.remove(7)
+                                    pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)                        
+                                elif a == 8 and a in empty_positions:
+                                    computer_options.append(8)
+                                    empty_positions.remove(8)
+                                    pygame.draw.circle(screen, (255, 255, 255), (350, 250), 19, 2)
+                                elif a == 9 and a in empty_positions:                        
+                                    computer_options.append(9)
+                                    empty_positions.remove(9)
+                                    pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+        else:
+            pass
+        if 8 in empty_positions:
+            if buttons[pygame.K_8]:
+                pygame.draw.line(screen, (0, 0, 0), (335, 235), (365, 265), 2)
+                pygame.draw.line(screen, (0, 0, 0), (365, 235), (335, 265), 2)
+                first_list.append(8)
+                for num in first_list:
+                    if num not in user_positions and num in empty_positions:
+                        first_list = []
+                        user_positions.append(num)
+                        empty_positions.remove(num)
+                        if winner != True:
+                            # Computer Wins
+                            # Vertical Position 1
+                            if 1 in computer_options and 4 in computer_options and 7 in empty_positions:
+                                computer_options.append(7)
+                                empty_positions.remove(7)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)
+                            elif 7 in computer_options and 4 in computer_options and 1 in empty_positions:
+                                computer_options.append(1)
+                                empty_positions.remove(1)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                            elif 1 in computer_options and 7 in computer_options and 4 in empty_positions:
+                                computer_options.append(4)
+                                empty_positions.remove(4)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 200), 19, 2)
+
+                            # Vertical Position 3
+                            elif 3 in computer_options and 6 in computer_options and 9 in empty_positions:
+                                computer_options.append(9)
+                                empty_positions.remove(9)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+                            elif 9 in computer_options and 6 in computer_options and 3 in empty_positions:
+                                computer_options.append(3)
+                                empty_positions.remove(3)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                            elif 3 in computer_options and 9 in computer_options and 6 in empty_positions:
+                                computer_options.append(6)
+                                empty_positions.remove(6)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 200), 19, 2)
+                            
+                            # Horizontal Position 1
+                            elif 1 in computer_options and 2 in computer_options and 3 in empty_positions:
+                                computer_options.append(3)
+                                empty_positions.remove(3)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                            elif 3 in computer_options and 2 in computer_options and 1 in empty_positions:
+                                computer_options.append(1)
+                                empty_positions.remove(1)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                            elif 1 in computer_options and 3 in computer_options and 2 in empty_positions:
+                                computer_options.append(2)
+                                empty_positions.remove(2)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 150), 19, 2)
+
+                            # Horizontal position 2
+                            elif 4 in computer_options and 5 in computer_options and 6 in empty_positions:
+                                computer_options.append(6)
+                                empty_positions.remove(6)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 200), 19, 2)
+                            elif 6 in computer_options and 5 in computer_options and 4 in empty_positions:
+                                computer_options.append(4)
+                                empty_positions.remove(4)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 200), 19, 2)
+                            elif 4 in computer_options and 6 in computer_options and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)                        
+
+                            # Diagonal Position 1 to 9
+                            elif 1 in computer_options and 5 in computer_options and 9 in empty_positions:
+                                computer_options.append(9)
+                                empty_positions.remove(9)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+                            elif 9 in computer_options and 5 in computer_options and 1 in empty_positions:
+                                computer_options.append(1)
+                                empty_positions.remove(1)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                            elif 1 in computer_options and 9 in computer_options and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+
+                            # Diagonal Position 3 to 7
+                            elif 3 in computer_options and 5 in computer_options and 7 in empty_positions:
+                                computer_options.append(7)
+                                empty_positions.remove(7)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)
+                            elif 7 in computer_options and 5 in computer_options and 3 in empty_positions:
+                                computer_options.append(3)
+                                empty_positions.remove(3)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                            elif 3 in computer_options and 7 in computer_options and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+                                
+                            # Other Cases
+                            elif 2 in user_positions and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+                            elif 5 in user_positions and 2 in empty_positions:
+                                computer_options.append(2)
+                                empty_positions.remove(2)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 150), 19, 2)
+                            elif 7 in user_positions and 9 in empty_positions:
+                                computer_options.append(9)
+                                empty_positions.remove(9)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+                            elif 9 in user_positions and 7 in empty_positions:
+                                computer_options.append(7)
+                                empty_positions.remove(7)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)
+                            else:
+                                a = choice(empty_positions)
+                                if a == 1 and a in empty_positions:
+                                    computer_options.append(1)
+                                    empty_positions.remove(1)
+                                    pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                                elif a == 2 and a in empty_positions:
+                                    computer_options.append(2)
+                                    empty_positions.remove(2)
+                                    pygame.draw.circle(screen, (255, 255, 255), (350, 150), 19, 2)
+                                elif a == 3 and a in empty_positions:
+                                    computer_options.append(3)
+                                    empty_positions.remove(3)
+                                    pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                                elif a == 4 and a in empty_positions:
+                                    computer_options.append(4)
+                                    empty_positions.remove(4)
+                                    pygame.draw.circle(screen, (255, 255, 255), (300, 200), 19, 2)
+                                elif a == 5 and a in empty_positions:
+                                    computer_options.append(5)
+                                    empty_positions.remove(5)
+                                    pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+                                elif a == 6 and a in empty_positions:                        
+                                    computer_options.append(6)
+                                    empty_positions.remove(6)
+                                    pygame.draw.circle(screen, (255, 255, 255), (400, 200), 19, 2)                        
+                                elif a == 7 and a in empty_positions:
+                                    computer_options.append(7)
+                                    empty_positions.remove(7)
+                                    pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)                        
+                                elif a == 8 and a in empty_positions:
+                                    computer_options.append(8)
+                                    empty_positions.remove(8)
+                                    pygame.draw.circle(screen, (255, 255, 255), (350, 250), 19, 2)
+                                elif a == 9 and a in empty_positions:                        
+                                    computer_options.append(9)
+                                    empty_positions.remove(9)
+                                    pygame.draw.circle(screen, (255, 255, 255), (400, 250), 19, 2)
+        else:
+            pass
+        if 9 in empty_positions:
+            if buttons[pygame.K_9]:
+                pygame.draw.line(screen, (0, 0, 0), (385, 235), (415, 265), 2)
+                pygame.draw.line(screen, (0, 0, 0), (415, 235), (385, 265), 2)
+                first_list.append(9)
+                for num in first_list:
+                    if num not in user_positions and num in empty_positions:
+                        first_list = []
+                        user_positions.append(num)
+                        empty_positions.remove(num)
+                        if winner != True:
+                            # Computer Wins
+                            # Vertical Position 1
+                            if 1 in computer_options and 4 in computer_options and 7 in empty_positions:
+                                computer_options.append(7)
+                                empty_positions.remove(7)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)
+                            elif 7 in computer_options and 4 in computer_options and 1 in empty_positions:
+                                computer_options.append(1)
+                                empty_positions.remove(1)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                            elif 1 in computer_options and 7 in computer_options and 4 in empty_positions:
+                                computer_options.append(4)
+                                empty_positions.remove(4)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 200), 19, 2)
+
+                            # Vertical Position 2
+                            elif 2 in computer_options and 5 in computer_options and 8 in empty_positions:
+                                computer_options.append(8)
+                                empty_positions.remove(8)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 250), 19, 2)
+                            elif 8 in computer_options and 5 in computer_options and 2 in empty_positions:
+                                computer_options.append(2)
+                                empty_positions.remove(2)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 150), 19, 2)
+                            elif 2 in computer_options and 8 in computer_options and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)                
+                            
+                            # Horizontal Position 1
+                            elif 1 in computer_options and 2 in computer_options and 3 in empty_positions:
+                                computer_options.append(3)
+                                empty_positions.remove(3)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                            elif 3 in computer_options and 2 in computer_options and 1 in empty_positions:
+                                computer_options.append(1)
+                                empty_positions.remove(1)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                            elif 1 in computer_options and 3 in computer_options and 2 in empty_positions:
+                                computer_options.append(2)
+                                empty_positions.remove(2)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 150), 19, 2)
+
+                            # Horizontal position 2
+                            elif 4 in computer_options and 5 in computer_options and 6 in empty_positions:
+                                computer_options.append(6)
+                                empty_positions.remove(6)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 200), 19, 2)
+                            elif 6 in computer_options and 5 in computer_options and 4 in empty_positions:
+                                computer_options.append(4)
+                                empty_positions.remove(4)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 200), 19, 2)
+                            elif 4 in computer_options and 6 in computer_options and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)                            
+
+                            # Diagonal Position 3 to 7
+                            elif 3 in computer_options and 5 in computer_options and 7 in empty_positions:
+                                computer_options.append(7)
+                                empty_positions.remove(7)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)
+                            elif 7 in computer_options and 5 in computer_options and 3 in empty_positions:
+                                computer_options.append(3)
+                                empty_positions.remove(3)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                            elif 3 in computer_options and 7 in computer_options and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+
+                            # Special Cases
+                            elif 5 in user_positions and 1 in computer_options and 3 in empty_positions:
+                                computer_options.append(3)
+                                empty_positions.remove(3)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                            elif 5 in user_positions and 1 in computer_options and 7 in empty_positions:
+                                computer_options.append(7)
+                                empty_positions.remove(7)
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)
+
+                            # Other Cases
+                            elif 3 in user_positions and 6 in empty_positions:
+                                computer_options.append(6)
+                                empty_positions.remove(6)
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 200), 19, 2)
+                            elif 6 in user_positions and 3 in empty_positions:
+                                computer_options.append(3)
+                                empty_positions.remove(3)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)                        
+                            elif 8 in user_positions and 7 in empty_positions:
+                                computer_options.append(7)
+                                empty_positions.remove(7)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)
+                            elif 7 in user_positions and 8 in empty_positions:
+                                computer_options.append(8)
+                                empty_positions.remove(8)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 250), 19, 2)                        
+                            elif 1 in user_positions and 5 in empty_positions:
+                                computer_options.append(5)
+                                empty_positions.remove(5)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+                            elif 5 in user_positions and 1 in empty_positions:
+                                computer_options.append(1)
+                                empty_positions.remove(1)                            
+                                pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+
+                            # Corner Cases
+                            elif len(empty_positions) == 8:
+                                computer_options.append(5)
+                                empty_positions.remove(5)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+                            elif len(empty_positions) == 6 and 1 in user_positions and 5 in computer_options:
+                                computer_options.append(8)
+                                empty_positions.remove(8)
+                                pygame.draw.circle(screen, (255, 255, 255), (350, 250), 19, 2)    
+                            else:
+                                a = choice(empty_positions)
+                                if a == 1 and a in empty_positions:
+                                    computer_options.append(1)
+                                    empty_positions.remove(1)
+                                    pygame.draw.circle(screen, (255, 255, 255), (300, 150), 19, 2)
+                                elif a == 2 and a in empty_positions:
+                                    computer_options.append(2)
+                                    empty_positions.remove(2)
+                                    pygame.draw.circle(screen, (255, 255, 255), (350, 150), 19, 2)
+                                elif a == 3 and a in empty_positions:
+                                    computer_options.append(3)
+                                    empty_positions.remove(3)
+                                    pygame.draw.circle(screen, (255, 255, 255), (400, 150), 19, 2)
+                                elif a == 4 and a in empty_positions:
+                                    computer_options.append(4)
+                                    empty_positions.remove(4)
+                                    pygame.draw.circle(screen, (255, 255, 255), (300, 200), 19, 2)
+                                elif a == 5 and a in empty_positions:
+                                    computer_options.append(5)
+                                    empty_positions.remove(5)
+                                    pygame.draw.circle(screen, (255, 255, 255), (350, 200), 19, 2)
+                                elif a == 6 and a in empty_positions:                        
+                                    computer_options.append(6)
+                                    empty_positions.remove(6)
+                                    pygame.draw.circle(screen, (255, 255, 255), (400, 200), 19, 2)                        
+                                elif a == 7 and a in empty_positions:
+                                    computer_options.append(7)
+                                    empty_positions.remove(7)
+                                    pygame.draw.circle(screen, (255, 255, 255), (300, 250), 19, 2)                        
+                                elif a == 8 and a in empty_positions:
+                                    computer_options.append(8)
+                                    empty_positions.remove(8)
+                                    pygame.draw.circle(screen, (255, 255, 255), (350, 250), 19, 2)
+        else:
+            pass
+    elif len(empty_positions) == 1 and winner != True:
+        buttons = pygame.key.get_pressed()
+        if 1 in empty_positions:
+            if buttons[pygame.K_1]:
+                pygame.draw.line(screen, (0, 0, 0), (285, 135), (315, 165), 2)
+                pygame.draw.line(screen, (0, 0, 0), (315, 135), (285, 165), 2)
+                empty_positions.remove(1)
+                user_positions.append(1)
+        else:
+            pass
+        if 2 in empty_positions:              
+            if buttons[pygame.K_2]:
+                pygame.draw.line(screen, (0, 0, 0), (335, 135), (365, 165), 2)
+                pygame.draw.line(screen, (0, 0, 0), (365, 135), (335, 165), 2)
+                empty_positions.remove(2)
+                user_positions.append(2)
+        else:
+            pass
+        if 3 in empty_positions:
+            if buttons[pygame.K_3]:
+                pygame.draw.line(screen, (0, 0, 0), (385, 135), (415, 165), 2)
+                pygame.draw.line(screen, (0, 0, 0), (415, 135), (385, 165), 2)
+                empty_positions.remove(3)
+                user_positions.append(3)
+        else:
+            pass
+        if 4 in empty_positions:
+            if buttons[pygame.K_4]:
+                pygame.draw.line(screen, (0, 0, 0), (315, 185), (285, 215), 2)
+                pygame.draw.line(screen, (0, 0, 0), (285, 185), (315, 215), 2)
+                empty_positions.remove(4)
+                user_positions.append(4)
+        else:
+            pass
+        if 5 in empty_positions:
+            if buttons[pygame.K_5]:
+                pygame.draw.line(screen, (0, 0, 0), (335, 185), (365, 215), 2)
+                pygame.draw.line(screen, (0, 0, 0), (365, 185), (335, 215), 2)
+                empty_positions.remove(5)
+                user_positions.append(5)
+        else:
+            pass
+        if 6 in empty_positions:
+            if buttons[pygame.K_6]:
+                pygame.draw.line(screen, (0, 0, 0), (385, 185), (415, 215), 2)
+                pygame.draw.line(screen, (0, 0, 0), (415, 185), (385, 215), 2)
+                empty_positions.remove(6)
+                user_positions.append(6)
+        else:
+            pass
+        if 7 in empty_positions:
+            if buttons[pygame.K_7]:
+                pygame.draw.line(screen, (0, 0, 0), (285, 235), (315, 265), 2)
+                pygame.draw.line(screen, (0, 0, 0), (315, 235), (285, 265), 2)
+                empty_positions.remove(7)
+                user_positions.append(7)
+        else:
+            pass
+        if 8 in empty_positions:
+            if buttons[pygame.K_8]:
+                pygame.draw.line(screen, (0, 0, 0), (335, 235), (365, 265), 2)
+                pygame.draw.line(screen, (0, 0, 0), (365, 235), (335, 265), 2)
+                empty_positions.remove(8)
+                user_positions.append(8)
+        else:
+            pass
+        if 9 in empty_positions:
+            if buttons[pygame.K_9]:
+                pygame.draw.line(screen, (0, 0, 0), (385, 235), (415, 265), 2)
+                pygame.draw.line(screen, (0, 0, 0), (415, 235), (385, 265), 2)
+                empty_positions.remove(9)
+                user_positions.append(9)
+        else:
+            pass
+    elif len(empty_positions) == 0 and winner != True:
+        text_on_screen("It's A Draw", (265,300), (218,112,214))
+    # elif starting == 2:
+    #     starting == 1
+
+#   Deciding the winner
+    if 1 in user_positions and 2 in user_positions and 3 in user_positions:
+        text_on_screen('You Win!!', (280,300), (25,25,112))
+    elif 1 in user_positions and 4 in user_positions and 7 in user_positions:
+        text_on_screen('You Win!!', (280,300), (25,25,112))        
+    elif 1 in user_positions and 5 in user_positions and 9 in user_positions:
+        text_on_screen('You Win!!', (280,300), (25,25,112))                
+    elif 2 in user_positions and 5 in user_positions and 8 in user_positions:
+        text_on_screen('You Win!!', (280,300), (25,25,112))              
+    elif 3 in user_positions and 5 in user_positions and 7 in user_positions:
+        text_on_screen('You Win!!', (280,300), (25,25,112))               
+    elif 3 in user_positions and 6 in user_positions and 9 in user_positions:
+        text_on_screen('You Win!!', (280,300), (25,25,112))                
+    elif 4 in user_positions and 5 in user_positions and 6 in user_positions:
+        text_on_screen('You Win!!', (280,300), (25,25,112))                
+    elif 7 in user_positions and 8 in user_positions and 9 in user_positions:
+        text_on_screen('You Win!!', (280,300), (25,25,112))                
+    
+#   Computer
+    elif 1 in computer_options and 2 in computer_options and 3 in computer_options:
+        text_on_screen('The Computer Wins!!', (200,300), (255,69,0))
+
+    elif 1 in computer_options and 4 in computer_options and 7 in computer_options:
+        text_on_screen('The Computer Wins!!', (200,300), (255,69,0))
+
+    elif 1 in computer_options and 5 in computer_options and 9 in computer_options:
+        text_on_screen('The Computer Wins!!', (200,300), (255,69,0))
+
+    elif 2 in computer_options and 5 in computer_options and 8 in computer_options:
+        text_on_screen('The Computer Wins!!', (200,300), (255,69,0))
+
+    elif 3 in computer_options and 5 in computer_options and 7 in computer_options:
+        text_on_screen('The Computer Wins!!', (200,300), (255,69,0))
+
+    elif 3 in computer_options and 6 in computer_options and 9 in computer_options:
+        text_on_screen('The Computer Wins!!', (200,300), (255,69,0))
+
+    elif 4 in computer_options and 5 in computer_options and 6 in computer_options:
+        text_on_screen('The Computer Wins!!', (200,300), (255,69,0))
+
+    elif 7 in computer_options and 8 in computer_options and 9 in computer_options:
+        text_on_screen('The Computer Wins!!', (200,300), (255,69,0))
+    pygame.display.update()
+pygame.quit()
+
+print(f"These are the list of user's inputs: {user_positions}")
+print(f"These are the list of computer's inputs: {computer_options}")
+print(f"These are the empty positions {empty_positions}")

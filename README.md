@@ -1,2 +1,2 @@
-# Tic-Tac-Toe
-Simple Tic-Tac-Toe Game using Python
+# Project
+Group Project (Rattan & Chris)
